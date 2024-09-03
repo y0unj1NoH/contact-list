@@ -7,7 +7,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
 
   const handleChange = e => {
     const { name, value } = 
-      e.target ? e.target :{ name: "group", value: e.value };
+      e.target ? e.target :{ name: "group", value: e.value};
     setValue({
       ...values,
       [name]: value
@@ -19,7 +19,8 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     e.preventDefault();
     const newErrors = validate(values.name, values.phone);
     if (Object.keys(newErrors).length === 0) {
-      await onSubmit();
+      await onSubmit(values);
+      // 저장 후 토스트 띄우면 좋을듯
     }
     setError(newErrors);
     setIsLoading(false);

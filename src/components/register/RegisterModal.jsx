@@ -1,18 +1,25 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Button from '../common/Button';
 import LabelInput from '../common/LabelInput';
+import Modal from '../common/Modal';
 
-const RegisterModal = React.forwardRef(
-    ({list, setList, setViewModal}, ref) => {
+const RegisterModal = 
+    ({list, setList, setViewModal}) => {
 
-    const onAdd = () => {
-        setList([...list, { value: "미그룹", label: "미그룹" }]);
+    const ref = useRef();
+
+    const onAdd = (e) => {
+        e.preventDefault()
+        const newList = [...list, { value: ref.current.value, label: ref.current.value }]
+        setList(newList);
+        localStorage.setItem("orgList", JSON.stringify(newList));
         ref.current.value = '';
         ref.current.focus();
     }
 
-    const onDelete = (id) => {
-        setList(list.filter(item => item.id !== id));
+    const onDelete = (e, id) => {
+        e.preventDefault()
+        setList(list.filter(item => item.value !== id));
     }
 
     useEffect(() => {
@@ -20,27 +27,28 @@ const RegisterModal = React.forwardRef(
     },[list])
 
     return (
-        <>
-            <h2>그룹 관리</h2>
-            <Button onClick={()=>{
-                setViewModal(false);
-            }}>X</Button>
-            <ul>
-                {list.map((item, index) => (
-                <li key={index}>
-                    {item.value} 
-                    <Button onClick={() => onDelete(index)}>X</Button>
-                </li>))
-            }
-            </ul>
+            <Modal onClose = {()=>{ setViewModal(false)}} >
+                <>
+                    <h2>그룹 관리</h2>
+                    <ul>
+                        {list.map((item, index) => (
+                            <li key={index}>
+                                {item.value} 
+                                <Button className="modal-close-btn" onClick={() => {onDelete(item.value)}}>X</Button>
+                            </li>))
+                        }
+                    </ul>
+                    <div className='add-con'>
+                        {/* input에 자식을 넣으면 안됨 */}
+                        {/* Error: input is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`. */}
+                        <LabelInput ref={ref}/>
+                        <Button onClick={onAdd}>추가</Button>
+                    </div>
+                </>
 
-            <LabelInput ref={ref}>저장</LabelInput>
-            <Button onClick={onAdd}>추가</Button>
-
-        </>
+            </Modal>           
     )
 }
-)
 
 RegisterModal.displayName = 'RegisterModal';
 

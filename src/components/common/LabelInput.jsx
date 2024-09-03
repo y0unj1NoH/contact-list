@@ -1,7 +1,7 @@
-// import { useState, useCallback } from 'react';
+import React from 'react';
 
 // css 작업 안함
-const LabelInput = ({ 
+const LabelInput = React.forwardRef(({ 
     label, 
     name,
     id,
@@ -11,12 +11,13 @@ const LabelInput = ({
     onChange,
     disabled,
     ...props 
-}) => {
+},ref) => {
 const LabelInputBlock = 'div';
   return (
     <LabelInputBlock>
       {label ? (<label htmlFor={name}>{label}</label>): undefined}
       <input 
+        ref={ref}
         name={name}
         id={id}
         type={type} 
@@ -28,6 +29,8 @@ const LabelInputBlock = 'div';
       />
     </LabelInputBlock>
   );
-}
+})
+
+LabelInput.displayName = 'LabelInput';
 
 export default LabelInput;

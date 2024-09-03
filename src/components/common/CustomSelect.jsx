@@ -1,8 +1,13 @@
+import { useEffect } from 'react';
 import Select from 'react-select';
 
-const CustomSelect = ({ list, onChange, setSelected }) => {
+const CustomSelect = ({ list, onChange }) => {
+
+    useEffect(()=>{
+        onChange(list[0])
+    },[])
+
     const onChangeSelect = (e) => {
-        setSelected(e.value);
         onChange(e);
     }
 

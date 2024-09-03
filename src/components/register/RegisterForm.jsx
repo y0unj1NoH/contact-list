@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from '../common/Button';
 import LabelInput from '../common/LabelInput';
 import ErrorText from '../error/ErrorText';
@@ -10,13 +10,23 @@ const sleep = async () => {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve();
-        }, 1000);
+        }, 500);
     });
 }
 
 const RegisterForm = () => {
     const SelectableBlock = 'div';
     
+    const onSubmit = async (values) => {
+        await sleep();
+        const list = JSON.parse(localStorage.getItem("contactList")) || [];
+
+        // 기존 리스트에 이미 같은 번호 저장되어 있으면, 저장하지 않는다.
+        const isExist = list.some((item) => item.phone === values.phone);
+        if(!isExist) {localStorage.setItem("contactList",JSON.stringify([...list, values]));}
+        else {alert("이미 저장된 번호입니다.")}
+    } 
+
     const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
         initialValues: {
             name: '',
@@ -24,10 +34,7 @@ const RegisterForm = () => {
             group: '',
             memo: '',
         },
-        onSubmit: async () => {
-            await sleep();
-            console.log('submit');
-        },
+        onSubmit,
         validate: (name, phone) => {
             const newErrors = {};
 
@@ -41,18 +48,19 @@ const RegisterForm = () => {
             return newErrors;
         }
     })
+    console.log("values!!!!!!!!",values);
 
-    const initialList =  [
+    const initialOrgList =  [
             { value: "미그룹", label: "미그룹" },
             { value: "가족", label: "가족" },
             { value: "친구", label: "친구" },
             { value: "회사", label: "회사" }
     ]
     
-    const [list, setList] = useState(initialList);
-    const [selected, setSelected] = useState('미그룹');
+    const [orgList, setOrgList] = useState(JSON.parse(localStorage.getItem("orgList")) || initialOrgList);
     const [viewModal, setViewModal] = useState(false);
-    
+    // console.log(selected, orgList);
+
     return (
         <form onSubmit={handleSubmit}>
             <LabelInput 
@@ -71,26 +79,31 @@ const RegisterForm = () => {
                 id="phone"
                 type="text" 
                 placeholder="전화번호를 - 빼고 입력해 주세요" 
-                onChange={handleChange}
+                onChange={(e) => {
+                    e.target.value = e.target.value
+                                        .replace(/[^0-9]/g, '')
+                                        .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(-{1,2})$/g, "")
+                    handleChange(e)}
+                }
             />
             {errors.phone &&  <ErrorText error={errors.phone} /> }
 
             <SelectableBlock>
                 <p>그룹</p>
-                <CustomSelect list={list} onChange={handleChange} setSelected={setSelected}/>
-                {/* 모달 우웩 */}
+                <CustomSelect list={orgList} onChange={handleChange} />
                 <Button 
-                    onClick={()=>{
+                    onClick={(e)=>{
+                        e.preventDefault();
                         setViewModal(true);
                     }}>
                     그룹 추가
                 </Button>
             </SelectableBlock>
 
-            <RegisterModal 
-                list={list} 
-                setList={setList} 
-                setViewModal={setViewModal} />
+            {viewModal && <RegisterModal 
+                list={orgList} 
+                setList={setOrgList} 
+                setViewModal={setViewModal} />}
 
             <LabelInput 
                 label="간단한 기록" 
