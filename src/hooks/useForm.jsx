@@ -6,6 +6,7 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = e => {
+    // e.target도 객체라 객체 타입인지 확인하니까 안됐음
     const { name, value } = 
       e.target ? e.target :{ name: "group", value: e.value};
     setValue({

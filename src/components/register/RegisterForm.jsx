@@ -14,7 +14,7 @@ const sleep = async () => {
     });
 }
 
-const RegisterForm = () => {
+const RegisterForm = ({...props}) => {
     const SelectableBlock = 'div';
     
     const onSubmit = async (values) => {
@@ -38,17 +38,16 @@ const RegisterForm = () => {
         validate: (name, phone) => {
             const newErrors = {};
 
-            if (!name) {
-                newErrors.name = '이름을 입력해 주세요';
+            if (name.length < 1) {
+                newErrors.name = '이름을 두 글자이상 입력해 주세요';
             }
             if (!phone) {
-                newErrors.phone = '전화번호를 입력해 주세요';
+                newErrors.phone = '전화번호를 숫자만 입력해 주세요';
             }
 
             return newErrors;
         }
     })
-    console.log("values!!!!!!!!",values);
 
     const initialOrgList =  [
             { value: "미그룹", label: "미그룹" },
@@ -59,10 +58,9 @@ const RegisterForm = () => {
     
     const [orgList, setOrgList] = useState(JSON.parse(localStorage.getItem("orgList")) || initialOrgList);
     const [viewModal, setViewModal] = useState(false);
-    // console.log(selected, orgList);
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} {...props}>
             <LabelInput 
                 label="이름" 
                 name="name" 

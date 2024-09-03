@@ -13,7 +13,7 @@ const ContactItem = ({ item, onDelete }) => {
             <span>{item.phone}</span>
             <span>{item.group}</span>
             <Button className="item-detail-btn" onClick={() => setViewModal(true)}>세부사항</Button>
-            <Button className="item-delete-btn" onClick={() => onDelete(item.phone)}>삭제</Button>
+            <Button className="item-delete-btn" onClick={onDelete}>삭제</Button>
             {viewModal && <ContactModal item={item} onClose={() => setViewModal(false)} />}
         </ContactItemBlock>
     )
