@@ -13,7 +13,7 @@ const ModalBlock = styled.div`
     flex-direction: column;
 
     button {
-
+        height: 2.5rem;
     }
 
 `

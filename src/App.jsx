@@ -16,7 +16,7 @@ function App() {
       <RegisterForm setLength={setLength}/>
       <>
       <SearchTemplate setKeyword={setKeyword} style={{backgroundColor: "pink"}}/>
-      <ContactList length={length} setLength={setLength} keyword={keyword} style={{backgroundColor: "yellow", color: "green"}}/>
+      <ContactList length={length} setLength={setLength} keyword={keyword}/>
       </>
     </>
   )
