@@ -14,6 +14,7 @@ const ContactItemBlock = styled.li`
     padding: 1rem 0;
     border-bottom: 1px dashed lightgray;
     font-size: 1.125rem;
+    white-space: 700px;
 
     strong {
         width: 25%;
