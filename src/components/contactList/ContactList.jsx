@@ -9,7 +9,9 @@ const ContactList = ({keyword,...props}) => {
     const ContactListBlock = 'ul'
 
     const onDelete = (phone) => {
-        setContactList(contactList.filter(item => item.phone !== phone));
+        const newList = contactList.filter(item => item.phone !== phone);
+        setContactList(newList);
+        localStorage.setItem("contactList", JSON.stringify(newList));
     }
 
     // 필터에서 {}를 쓰면 return하여 불린값을 줘야함 안쓰면 안줘도됨

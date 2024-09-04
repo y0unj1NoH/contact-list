@@ -19,7 +19,9 @@ const RegisterModal =
 
     const onDelete = (e, id) => {
         e.preventDefault()
-        setList(list.filter(item => item.value !== id));
+        const newList = list.filter(item => item.value !== id);
+        setList(newList);
+        localStorage.setItem("orgList", JSON.stringify(newList));
     }
 
     useEffect(() => {
@@ -34,7 +36,7 @@ const RegisterModal =
                         {list.map((item, index) => (
                             <li key={index}>
                                 {item.value} 
-                                <Button className="modal-close-btn" onClick={() => {onDelete(item.value)}}>X</Button>
+                                <Button className="modal-close-btn" onClick={() => {onDelete(item.value)}} backgroundColor={'transparent'} color={'#333'}>X</Button>
                             </li>))
                         }
                     </ul>

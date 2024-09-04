@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import styled, { css } from 'styled-components';
 import Button from '../common/Button';
 import LabelInput from '../common/LabelInput';
 import ErrorText from '../error/ErrorText';
 import useForm from '../../hooks/useForm';
-import CustomSelect from '../common/CustomSelect';
-import RegisterModal from './RegisterModal';
+import RegisterSelect from './RegisterSelect';
+
 
 const sleep = async () => {
     return new Promise((resolve) => {
@@ -14,8 +15,41 @@ const sleep = async () => {
     });
 }
 
+const RegisterFormBlock = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    padding: 1rem 1.5rem;
+    border: 1px solid lightgray;
+    border-radius: 0.25rem;
+
+    #submit-btn{
+        background-color: #2478FF;
+        width: 100%;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        font-size: 1.1rem;
+
+        &:hover {
+            background-color: #1B5AEE;
+        }
+
+        &:disabled {
+            background-color: #868E96;
+        }
+    }  
+`
+// 추가적으로 서브밋 시 버튼 disabled 되면서 버튼 색깔 바뀌게 추가하면 좋을듯
+// 로딩중 떠도 괜찮고
+
+
+
+
 const RegisterForm = ({...props}) => {
-    const SelectableBlock = 'div';
+    
+
     
     const onSubmit = async (values) => {
         await sleep();
@@ -60,7 +94,7 @@ const RegisterForm = ({...props}) => {
     const [viewModal, setViewModal] = useState(false);
 
     return (
-        <form onSubmit={handleSubmit} {...props}>
+        <RegisterFormBlock onSubmit={handleSubmit} {...props}>
             <LabelInput 
                 label="이름" 
                 name="name" 
@@ -86,34 +120,23 @@ const RegisterForm = ({...props}) => {
             />
             {errors.phone &&  <ErrorText error={errors.phone} /> }
 
-            <SelectableBlock>
-                <p>그룹</p>
-                <CustomSelect list={orgList} onChange={handleChange} />
-                <Button 
-                    onClick={(e)=>{
-                        e.preventDefault();
-                        setViewModal(true);
-                    }}>
-                    그룹 추가
-                </Button>
-            </SelectableBlock>
-
-            {viewModal && <RegisterModal 
-                list={orgList} 
-                setList={setOrgList} 
-                setViewModal={setViewModal} />}
+            <RegisterSelect orgList={orgList} 
+                            setOrgList={setOrgList} 
+                            handleChange={handleChange} 
+                            viewModal={viewModal} 
+                            setViewModal={setViewModal} />
 
             <LabelInput 
-                label="간단한 기록" 
+                label="메모" 
                 name="memo" 
                 id="memo"
                 type="text" 
-                placeholder="간단한 기록을 입력해 주세요" 
+                placeholder="메모를 입력해 주세요" 
                 onChange={handleChange}
             />
 
-            <Button type="submit" disabled={isLoading} >저장</Button>
-        </form>
+            <Button id="submit-btn" type="submit" disabled={isLoading} >저장</Button>
+        </RegisterFormBlock>
     )
 
 }

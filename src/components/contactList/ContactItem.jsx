@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
 import Button from '../common/Button';
 import ContactModal from './ContactModal';
 
@@ -13,7 +16,10 @@ const ContactItem = ({ item, onDelete }) => {
             <span>{item.phone}</span>
             <span>{item.group}</span>
             <Button className="item-detail-btn" onClick={() => setViewModal(true)}>세부사항</Button>
-            <Button className="item-delete-btn" onClick={onDelete}>삭제</Button>
+            <Button className="item-delete-btn" 
+                    onClick={onDelete} 
+                    backgroundColor={'transparent'} 
+                    color={'lightgray'}><FontAwesomeIcon icon={faTrashCan} /></Button>
             {viewModal && <ContactModal item={item} onClose={() => setViewModal(false)} />}
         </ContactItemBlock>
     )

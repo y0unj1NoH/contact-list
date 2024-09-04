@@ -1,30 +1,81 @@
+import styled, { css } from 'styled-components';
+
+const ButtonBlock = styled.button`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    backgroundColor: #DEE2E6;
+    color: #FFFFFF;
+    &:hover,
+    &:focus {
+      background: #E9ECEF;
+    }
+      
+    border-radius: 4px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    ${(props) =>
+      props.size === 'medium' &&
+      css`
+        height: 2rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        font-size: 1rem;
+      `}
+  
+      ${(props) =>
+      props.size === 'large' &&
+      css`
+        height: 2.5rem;
+        padding-left: 1.125rem;
+        padding-right: 1.125rem;
+        & + & {
+          margin-left: 0.875rem;
+        }
+        font-size: 1.125rem;
+      `}
+  
+      &:disabled {
+      cursor: not-allowed;
+      background: #2E2E2E;
+      color: #868E96;
+      &:hover {
+        background: #2E2E2E;
+        color: #868E96;
+      }
+    }
+  `;
+
+
 const button = ({ 
     children, 
     // ref,
     onClick,
     backgroundColor,
-    size,
-    strong,
-    fontSize,
     color,
-    // responsive = false,
+    strong,
+    size,
     ...props 
     }) => {
         const style = {
             backgroundColor: backgroundColor,
-            size:  typeof size === 'string' ? 'Button--size--' + size : 'medium',
+            color: color? color : '#FFFFFF',
             fontWeight: strong ? 'bold' : 'normal',
-            fontSize: typeof fontSize === 'number' ? size : undefined,
-            color: color,
+            size:  size,
         }
 
     return (
-        <button onClick={(e) => {
+        <ButtonBlock onClick={(e) => {
             if (onClick) {
                 onClick(e);
             }
             e.target.blur();
-          }}  style={{...props.style, ...style}} {...props}>{children}</button>
+          }}  style={{...props.style, ...style}} {...props}>{children}</ButtonBlock>
     );
 }
 
