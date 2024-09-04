@@ -10,11 +10,21 @@ const RegisterModal =
 
     const onAdd = (e) => {
         e.preventDefault()
-        const newList = [...list, { value: ref.current.value, label: ref.current.value }]
+        const value = ref.current.value;
+        if (!value) return;
+        if (list.find(item => item.value === value)) {
+            alert('이미 존재하는 그룹입니다');
+            ref.current.value = '';
+            ref.current.focus();
+            return;
+        }
+
+        const newList = [...list, { value: value, label: value }]
         setList(newList);
         localStorage.setItem("orgList", JSON.stringify(newList));
         ref.current.value = '';
         ref.current.focus();
+        
     }
 
     const onDelete = (e, id) => {
@@ -36,7 +46,7 @@ const RegisterModal =
                         {list.map((item, index) => (
                             <li key={index}>
                                 {item.value} 
-                                <Button className="modal-close-btn" onClick={() => {onDelete(item.value)}} backgroundColor={'transparent'} color={'#333'}>X</Button>
+                                <Button className="modal-close-btn" onClick={(e) => {onDelete(e, item.value)}} backgroundColor={'transparent'} color={'#333'}>X</Button>
                             </li>))
                         }
                     </ul>

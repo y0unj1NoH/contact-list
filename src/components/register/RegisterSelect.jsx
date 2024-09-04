@@ -62,7 +62,7 @@ const RegisterSelect = ({ orgList, setOrgList, handleChange, viewModal, setViewM
     }, []);
 
     return(
-        <RegisterSelectBlock focus={focus}>
+        <RegisterSelectBlock focus={focus} {...props}>
         <p>그룹</p>
         <CustomSelect id='org-select' list={orgList} onChange={handleChange} 
             onFocus={onFocus}

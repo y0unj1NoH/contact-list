@@ -8,10 +8,20 @@ const ModalBlock = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+
+    button {
+    
+    }
+
 `
 
 const ModalInner = styled.div`
+    padding: 1rem 2rem;
+    margin: auto;
+    border-radius: 8px;
     background: white;
     color: black;
 `
