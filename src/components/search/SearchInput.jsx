@@ -1,3 +1,4 @@
+import styled, { css } from 'styled-components';
 import LabelInput from "../common/LabelInput";
 
 const SearchInput = ({ setKeyword }) => {
@@ -14,6 +15,7 @@ const SearchInput = ({ setKeyword }) => {
             placeholder="검색어를 입력하세요"
         
         />
+
     );
 }
 

@@ -15,7 +15,7 @@ function App() {
       <Header level={1} strong >연락처 리스트</Header>
       <RegisterForm setLength={setLength}/>
       <>
-      <SearchTemplate setKeyword={setKeyword} style={{backgroundColor: "pink"}}/>
+      <SearchTemplate setKeyword={setKeyword}/>
       <ContactList length={length} setLength={setLength} keyword={keyword}/>
       </>
     </>
