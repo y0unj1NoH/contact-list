@@ -1,14 +1,18 @@
 import { useEffect, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from '../common/Button';
 import LabelInput from '../common/LabelInput';
 import Modal from '../common/Modal';
 
 const RegisterModalBlock = styled.div`
-    // border: 1px solid #333;
     width: 90%;
     margin: 0 auto;
     white-space: nowrap;
+    padding: 1rem;
+
+    h2 {
+        margin: 0;
+    }
 
     ul{
         // border: 1px solid blue;
@@ -19,7 +23,6 @@ const RegisterModalBlock = styled.div`
     li {
         width: 100%;
         margin: 0 auto;
-        // border: 1px solid red;
         list-style: none;
         display: flex;
         justify-content: space-between;
@@ -27,13 +30,20 @@ const RegisterModalBlock = styled.div`
 
     }
 
-
+    // #add-con 부분 야매로 한 거 같아서 나중에 수정해야 할듯
+    // 플렉스 잘 몰라서 공부 다시 해야 함
     #add-con {
         display: flex;
+        justify-content: center;
+        gap: 1rem;
     }
 
-    #add-con > button {
-        border: 1px solid red;
+    #add-con input {
+        flex: 1;
+    }
+
+    #add-con button {
+        padding: 0.5rem 1rem;
     }
 `
 
@@ -57,6 +67,7 @@ const RegisterModal =
 
         const newList = [...list, { value: value, label: value }]
         setList(newList);
+        // useEffect로 코드 수정해보기
         localStorage.setItem("orgList", JSON.stringify(newList));
         ref.current.value = '';
         ref.current.focus();
@@ -70,9 +81,10 @@ const RegisterModal =
         localStorage.setItem("orgList", JSON.stringify(newList));
     }
 
+
     useEffect(() => {
-        console.log('list', list);
-    },[list])
+        ref.current.focus();
+    },[])
 
     return (
             <Modal onClose = {()=>{ setViewModal(false)}} >
@@ -82,7 +94,10 @@ const RegisterModal =
                         {list.map((item, index) => (
                             <li key={index}>
                                 {item.value} 
-                                <Button className="modal-close-btn" onClick={(e) => {onDelete(e, item.value)}} backgroundColor={'transparent'} color={'#333'}>X</Button>
+                                <Button className="modal-close-btn" 
+                                        onClick={(e) => {onDelete(e, item.value)}} 
+                                        backgroundColor={'transparent'} 
+                                        color={'#333'}>X</Button>
                             </li>))
                         }
                     </ul>

@@ -39,13 +39,16 @@ const RegisterFormBlock = styled.form`
         &:disabled {
             background-color: #868E96;
         }
-    }  
+    } 
+    
+    .error-text{
+        margin-left: calc(30% - 1rem);      
+        text-align: left;
+    }
+
 `
 // 추가적으로 서브밋 시 버튼 disabled 되면서 버튼 색깔 바뀌게 추가하면 좋을듯
 // 로딩중 떠도 괜찮고
-
-
-
 
 const RegisterForm = ({...props}) => {
     
