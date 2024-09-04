@@ -8,11 +8,11 @@ const ButtonBlock = styled.button`
     cursor: pointer;
     outline: none;
     border: none;
-    backgroundColor: #DEE2E6;
+    background-color: #b4b4b4;
     color: #FFFFFF;
     &:hover,
     &:focus {
-      background: #E9ECEF;
+      background: #8c8c8c;
     }
       
     border-radius: 4px;

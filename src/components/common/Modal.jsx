@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from './Button';
 
 const ModalBlock = styled.div`
@@ -13,7 +13,7 @@ const ModalBlock = styled.div`
     flex-direction: column;
 
     button {
-    
+
     }
 
 `
