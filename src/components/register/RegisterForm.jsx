@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Button from '../common/Button';
 import LabelInput from '../common/LabelInput';
@@ -50,19 +50,21 @@ const RegisterFormBlock = styled.form`
 // 추가적으로 서브밋 시 버튼 disabled 되면서 버튼 색깔 바뀌게 추가하면 좋을듯
 // 로딩중 떠도 괜찮고
 
-const RegisterForm = ({...props}) => {
-    
-
-    
+const RegisterForm = ({ setLength, ...props}) => {
     const onSubmit = async (values) => {
         await sleep();
         const list = JSON.parse(localStorage.getItem("contactList")) || [];
 
         // 기존 리스트에 이미 같은 번호 저장되어 있으면, 저장하지 않는다.
         const isExist = list.some((item) => item.phone === values.phone);
-        if(!isExist) {localStorage.setItem("contactList",JSON.stringify([...list, values]));}
+        if(!isExist) {
+            const newList = [...list, values];
+            localStorage.setItem("contactList",JSON.stringify(newList));
+            console.log(newList.length)
+            setLength(newList.length);
+        }
         else {alert("이미 저장된 번호입니다.")}
-    } 
+    }
 
     const { values, errors, isLoading, handleChange, handleSubmit } = useForm({
         initialValues: {

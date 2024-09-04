@@ -8,14 +8,15 @@ import './App.css'
 
 function App() {
   const [keyword, setKeyword] = useState('');
+  const [length, setLength] = useState(JSON.parse(localStorage.getItem("contactList"))?.length || 0);
 
   return (
     <>
       <Header level={1} strong >연락처 리스트</Header>
-      <RegisterForm/>
+      <RegisterForm setLength={setLength}/>
       <>
       <SearchTemplate setKeyword={setKeyword} style={{backgroundColor: "pink"}}/>
-      <ContactList keyword={keyword} style={{backgroundColor: "yellow", color: "green"}}/>
+      <ContactList length={length} setLength={setLength} keyword={keyword} style={{backgroundColor: "yellow", color: "green"}}/>
       </>
     </>
   )
